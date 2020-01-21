@@ -1,18 +1,20 @@
 package main
 
 import (
-	"testing"
+	"fmt"
 
 	"github.com/RyzhAlexWork/go-intern/Facade/pkg/facade"
 )
 
-func TestFacade(t *testing.T) {
+func main() {
 	expect := "Wallet was create.\nStatus: Nice day! :)\nPay was success."
 
 	user := facade.NewUser()
 	result := user.FirstSignIn()
 
 	if result != expect {
-		t.Errorf("Expect result to equal %s, but %s.\n", expect, result)
+		fmt.Println("Expect result to equal %s, but %s.\n", expect, result)
+	} else {
+		fmt.Println("All ok! :)")
 	}
 }
