@@ -25,16 +25,6 @@ type pay struct {
 	sum int
 }
 
-// FirstSignIn returns user's data after first sign in.
-func (u *user) FirstSignIn() string {
-	result := []string{
-		u.wallet.create(),
-		u.status.getStatus(),
-		u.pay.payToSite(u.wallet),
-	}
-	return strings.Join(result, "\n")
-}
-
 // Create wallet and put in 15000 y.e.
 func (w *wallet) create() string {
 	w.money = 15000
@@ -52,6 +42,16 @@ func (p *pay) payToSite(w *wallet) string {
 	p.sum = 1000
 	w.money = w.money - p.sum
 	return "Pay was success."
+}
+
+// FirstSignIn returns user's data after first sign in.
+func (u *user) FirstSignIn() string {
+	result := []string{
+		u.wallet.create(),
+		u.status.getStatus(),
+		u.pay.payToSite(u.wallet),
+	}
+	return strings.Join(result, "\n")
 }
 
 // NewUser creates user.
