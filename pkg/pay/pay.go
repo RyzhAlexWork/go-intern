@@ -1,12 +1,12 @@
 package pay
 
+type wallet interface {
+	Pay(sum int) bool
+}
+
 // Pay ...
 type Pay interface {
 	PayToSite() string
-}
-
-type wallet interface {
-	Pay(sum int) bool
 }
 
 type pay struct {

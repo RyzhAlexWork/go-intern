@@ -4,23 +4,23 @@ package facade
 import (
 	"strings"
 )
-// Implements user
-type User interface {
-	FirstSignIn() string
-}
 
 type walleter interface {
 	Create() string
 }
 
 type statuser interface {
-	GetStatus()	string
+	GetStatus() string
 }
 
 type payer interface {
 	PayToSite() string
 }
 
+// Implements user
+type User interface {
+	FirstSignIn() string
+}
 
 type user struct {
 	wallet walleter
