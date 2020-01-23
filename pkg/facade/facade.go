@@ -1,48 +1,67 @@
-// Package facade is an example of the Facade Pattern.
 package facade
 
-import (
-	"strings"
-)
-
-type walleter interface {
-	Create() string
-}
-
-type statuser interface {
-	GetStatus() string
-}
-
-type payer interface {
-	PayToSite() string
-}
-
-// Implements user
+// User ...
 type User interface {
-	FirstSignIn() string
+	Add(money int) (walletStatus string)
+	Pay(money int) (walletStatus string)
+	Balance() (money int)
+}
+
+type wallet interface {
+	Pay(amount int) (done bool)
+	Add(amount int) (done bool)
+	Balance() (walletBalance int)
+}
+
+type walletStatus interface {
+	Get() (text string)
+	Change(newText string)
 }
 
 type user struct {
-	wallet walleter
-	status statuser
-	pay    payer
+	login        string
+	wallet       wallet
+	walletStatus walletStatus
 }
 
-// FirstSignIn returns user's data after first sign in.
-func (u *user) FirstSignIn() string {
-	result := []string{
-		u.wallet.Create(),
-		u.status.GetStatus(),
-		u.pay.PayToSite(),
+// Add deposit to wallet and change the walletStatus text
+func (u *user) Add(money int) (walletStatus string) {
+	var (
+		check bool
+	)
+	check = u.wallet.Add(money)
+	if check {
+		u.walletStatus.Change("Deposit was successful.")
+	} else {
+		u.walletStatus.Change("Deposit error. Too much money.")
 	}
-	return strings.Join(result, "\n")
+	return u.walletStatus.Get()
+}
+
+// Add makes payment from wallet and change the walletStatus text
+func (u *user) Pay(money int) (walletStatus string) {
+	var (
+		check bool
+	)
+	check = u.wallet.Pay(money)
+	if check {
+		u.walletStatus.Change("Pay was successful.")
+	} else {
+		u.walletStatus.Change("Pay error. Not enough money.")
+	}
+	return u.walletStatus.Get()
+}
+
+// Balance show balance
+func (u *user) Balance() (walletBalance int) {
+	return u.wallet.Balance()
 }
 
 // NewUser creates user.
-func NewUser(inputWallet walleter, inputStatus statuser, inputPay payer) User {
+func NewUser(login string, inputWallet wallet, inputWalletStatus walletStatus) User {
 	return &user{
-		wallet: inputWallet,
-		status: inputStatus,
-		pay:    inputPay,
+		login:        login,
+		wallet:       inputWallet,
+		walletStatus: inputWalletStatus,
 	}
 }

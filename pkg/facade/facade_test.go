@@ -3,25 +3,34 @@ package facade
 import (
 	"testing"
 
-	"github.com/RyzhAlexWork/go-intern/pkg/pay"
-	"github.com/RyzhAlexWork/go-intern/pkg/status"
-	"github.com/RyzhAlexWork/go-intern/pkg/wallet"
+	walletstatusPackage "github.com/RyzhAlexWork/go-intern/pkg/status"
+	walletPackage "github.com/RyzhAlexWork/go-intern/pkg/wallet"
 )
 
 var (
-	expect = "Wallet was create.\nStatus: Nice day! :)\nPay was success."
-	sums = []int{1000, 500, 1500, 2500, 6000}
+	addToBalance   = []int{1000, 15000, 500000, 1000000}
+	payFromBalance = []int{5000, 300000, 1500000}
+	expectsAdd     = []int{1000, 16000, 516000, 516000}
+	expectsPay     = []int{511000, 211000, 211000}
+	balance        int
+	newWallet      = walletPackage.NewWallet(0, 1000000)
+	newStatus      = walletstatusPackage.NewWalletStatus()
 )
 
 func Test_Facade(t *testing.T) {
-	for sum := range sums {
-		wallet := wallet.NewWallet()
-		status := status.NewStatus()
-		pay := pay.NewPay(wallet,sum)
-		user := NewUser(wallet, status, pay)
-		result := user.FirstSignIn()
-		if result != expect {
-			t.Errorf("Expect result to equal %s, but %s.\n", expect, result)
+	newUser := NewUser("Valera", newWallet, newStatus)
+	for i, expect := range expectsAdd {
+		newUser.Add(addToBalance[i])
+		balance = newUser.Balance()
+		if balance != expect {
+			t.Errorf("Wrong balance after deposit! Expect: %d, balance: %d", expect, balance)
+		}
+	}
+	for i, expect := range expectsPay {
+		newUser.Pay(payFromBalance[i])
+		balance = newUser.Balance()
+		if balance != expect {
+			t.Errorf("Wrong balance after pay! Expect: %d, balance: %d", expect, balance)
 		}
 	}
 }

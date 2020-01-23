@@ -2,26 +2,44 @@ package wallet
 
 // Wallet ...
 type Wallet interface {
-	Create() string
-	Pay(sum int) bool
+	Pay(amount int) (done bool)
+	Add(amount int) (done bool)
+	Balance() (money int)
 }
 
 type wallet struct {
-	money int
+	money    int
+	maxLimit int
+	minLimit int
 }
 
-// Create wallet and put in 15000 y.e.
-func (w *wallet) Create() string {
-	w.money = 15000
-	return "Wallet was create."
+// Add deposit to wallet
+func (w *wallet) Add(amount int) (done bool) {
+	if w.money+amount <= w.maxLimit {
+		w.money = w.money + amount
+		return true
+	}
+	return
 }
 
-func (w *wallet) Pay(sum int) bool {
-	w.money = w.money - sum
-	return true
+// Pay makes payment from wallet
+func (w *wallet) Pay(amount int) (done bool) {
+	if w.money-amount >= w.minLimit {
+		w.money = w.money - amount
+		return true
+	}
+	return
 }
 
-func NewWallet() Wallet {
-	return  &wallet{}
+// Balance show balance
+func (w *wallet) Balance() (money int) {
+	return w.money
 }
 
+// NewWallet create wallet implementation for interface Wallet
+func NewWallet(minLimit int, maxLimit int) Wallet {
+	return &wallet{
+		minLimit: minLimit,
+		maxLimit: maxLimit,
+	}
+}

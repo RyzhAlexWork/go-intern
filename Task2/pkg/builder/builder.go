@@ -1,22 +1,13 @@
 // Package builder is an example of the Builder Pattern.
 package builder
 
-type build struct {
-	wheels      bool
-	carcase     bool
-	engine      bool
-	accelerator bool
-	gun         bool
-}
-
 // Builder provides a builder interface.
 type Builder interface {
-	MakeWheels() bool
-	MakeCarcase() bool
-	MakeEngine() bool
-	MakeAccelerator() bool
-	MakeGun() bool
-	BuildCar() Car
+	MakeWheels()
+	MakeCarcase()
+	MakeEngine()
+	MakeAccelerator()
+	MakeGun()
 }
 
 // MakeWheels builds a wheels.
@@ -57,8 +48,4 @@ func (b *build) BuildCar() Car {
 		accelerator: b.accelerator,
 		gun:         b.gun,
 	}
-}
-
-func NewBuild() Builder {
-	return &build{}
 }

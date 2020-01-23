@@ -3,26 +3,36 @@ package main
 import (
 	"fmt"
 
-	"github.com/RyzhAlexWork/go-intern/pkg/pay"
-	"github.com/RyzhAlexWork/go-intern/pkg/status"
 	"github.com/RyzhAlexWork/go-intern/pkg/facade"
+	"github.com/RyzhAlexWork/go-intern/pkg/status"
 	"github.com/RyzhAlexWork/go-intern/pkg/wallet"
 )
 
 var (
-	expect = "Wallet was create.\nStatus: Nice day! :)\nPay was success."
+	expect = []string{
+		"Deposit was successful.",
+		"Pay was successful.",
+	}
+	result  string
+	balance int
 )
 
 func main() {
-	wallet := wallet.NewWallet()
-	status := status.NewStatus()
-	pay := pay.NewPay(wallet,1000)
-	user := facade.NewUser(wallet, status, pay)
-	result := user.FirstSignIn()
-
-	if result != expect {
-		fmt.Println("Expect result to equal %s, but %s.\n", expect, result)
+	newWallet := wallet.NewWallet(0, 1000000)
+	newStatus := walletstatus.NewWalletStatus()
+	newUser := facade.NewUser("Aksel", newWallet, newStatus)
+	result = newUser.Add(500000)
+	if result != expect[0] {
+		fmt.Printf("Expect result to equal: %s, but: %s.\n", expect, result)
+	}
+	result = newUser.Pay(200000)
+	if result != expect[1] {
+		fmt.Printf("Expect result to equal: %s, but: %s.\n", expect, result)
+	}
+	balance = newUser.Balance()
+	if balance != 300000 {
+		fmt.Printf("Wrong balance! Expect: 300000, balance: %d", balance)
 	} else {
-		fmt.Println("All ok! :)")
+		fmt.Println("All ok!")
 	}
 }
