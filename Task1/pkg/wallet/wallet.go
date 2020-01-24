@@ -4,7 +4,7 @@ package wallet
 type Wallet interface {
 	Pay(amount int) (done bool)
 	Add(amount int) (done bool)
-	Balance() (money int)
+	Balance() int
 }
 
 type wallet struct {
@@ -26,13 +26,13 @@ func (w *wallet) Add(amount int) (done bool) {
 func (w *wallet) Pay(amount int) (done bool) {
 	if w.money-amount >= w.minLimit {
 		w.money = w.money - amount
-		return true
+		done = true
 	}
 	return
 }
 
 // Balance show balance
-func (w *wallet) Balance() (money int) {
+func (w *wallet) Balance() int {
 	return w.money
 }
 

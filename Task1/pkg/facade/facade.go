@@ -6,17 +6,17 @@ import "github.com/RyzhAlexWork/go-intern/Task1/pkg/models"
 type User interface {
 	Add(money int) (walletStatus models.Status)
 	Pay(money int) (walletStatus models.Status)
-	Balance() (money int)
+	Balance() int
 }
 
 type wallet interface {
 	Pay(amount int) (done bool)
 	Add(amount int) (done bool)
-	Balance() (walletBalance int)
+	Balance() int
 }
 
 type walletStatus interface {
-	Get() (text models.Status)
+	Get() models.Status
 	Change(newText models.Status)
 }
 
@@ -37,7 +37,8 @@ func (u *user) Add(money int) (walletStatus models.Status) {
 	} else {
 		u.walletStatus.Change(models.AddFail)
 	}
-	return u.walletStatus.Get()
+	walletStatus = u.walletStatus.Get()
+	return
 }
 
 // Add makes payment from wallet and change the walletStatus text
@@ -51,11 +52,12 @@ func (u *user) Pay(money int) (walletStatus models.Status) {
 	} else {
 		u.walletStatus.Change(models.PayFail)
 	}
-	return u.walletStatus.Get()
+	walletStatus = u.walletStatus.Get()
+	return
 }
 
 // Balance show balance
-func (u *user) Balance() (walletBalance int) {
+func (u *user) Balance() int {
 	return u.wallet.Balance()
 }
 

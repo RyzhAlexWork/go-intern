@@ -4,7 +4,7 @@ import "github.com/RyzhAlexWork/go-intern/Task1/pkg/models"
 
 // WalletStatus ...
 type WalletStatus interface {
-	Get() (text models.Status)
+	Get() models.Status
 	Change(newText models.Status)
 }
 
@@ -13,7 +13,7 @@ type walletStatus struct {
 }
 
 // Get return walletStatus text
-func (w *walletStatus) Get() (text models.Status) {
+func (w *walletStatus) Get() models.Status {
 	return w.text
 }
 
