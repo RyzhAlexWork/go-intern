@@ -1,22 +1,24 @@
 package walletstatus
 
+import "github.com/RyzhAlexWork/go-intern/Task1/pkg/models"
+
 // WalletStatus ...
 type WalletStatus interface {
-	Get() (text string)
-	Change(newText string)
+	Get() (text models.Status)
+	Change(newText models.Status)
 }
 
 type walletStatus struct {
-	text string
+	text models.Status
 }
 
 // Get return walletStatus text
-func (w *walletStatus) Get() (text string) {
+func (w *walletStatus) Get() (text models.Status) {
 	return w.text
 }
 
 // Change change the walletStatus text
-func (w *walletStatus) Change(newText string) {
+func (w *walletStatus) Change(newText models.Status) {
 	w.text = newText
 }
 

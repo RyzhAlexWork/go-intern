@@ -17,7 +17,7 @@ type wallet struct {
 func (w *wallet) Add(amount int) (done bool) {
 	if w.money+amount <= w.maxLimit {
 		w.money = w.money + amount
-		return true
+		done = true
 	}
 	return
 }

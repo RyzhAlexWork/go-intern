@@ -3,8 +3,8 @@ package facade
 import (
 	"testing"
 
-	walletstatusPackage "github.com/RyzhAlexWork/go-intern/pkg/status"
-	walletPackage "github.com/RyzhAlexWork/go-intern/pkg/wallet"
+	walletstatusPackage "github.com/RyzhAlexWork/go-intern/Task1/pkg/status"
+	walletPackage "github.com/RyzhAlexWork/go-intern/Task1/pkg/wallet"
 )
 
 var (

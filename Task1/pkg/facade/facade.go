@@ -1,9 +1,11 @@
 package facade
 
+import "github.com/RyzhAlexWork/go-intern/Task1/pkg/models"
+
 // User ...
 type User interface {
-	Add(money int) (walletStatus string)
-	Pay(money int) (walletStatus string)
+	Add(money int) (walletStatus models.Status)
+	Pay(money int) (walletStatus models.Status)
 	Balance() (money int)
 }
 
@@ -14,8 +16,8 @@ type wallet interface {
 }
 
 type walletStatus interface {
-	Get() (text string)
-	Change(newText string)
+	Get() (text models.Status)
+	Change(newText models.Status)
 }
 
 type user struct {
@@ -25,29 +27,29 @@ type user struct {
 }
 
 // Add deposit to wallet and change the walletStatus text
-func (u *user) Add(money int) (walletStatus string) {
+func (u *user) Add(money int) (walletStatus models.Status) {
 	var (
 		check bool
 	)
 	check = u.wallet.Add(money)
 	if check {
-		u.walletStatus.Change("Deposit was successful.")
+		u.walletStatus.Change(models.AddSuccess)
 	} else {
-		u.walletStatus.Change("Deposit error. Too much money.")
+		u.walletStatus.Change(models.AddFail)
 	}
 	return u.walletStatus.Get()
 }
 
 // Add makes payment from wallet and change the walletStatus text
-func (u *user) Pay(money int) (walletStatus string) {
+func (u *user) Pay(money int) (walletStatus models.Status) {
 	var (
 		check bool
 	)
 	check = u.wallet.Pay(money)
 	if check {
-		u.walletStatus.Change("Pay was successful.")
+		u.walletStatus.Change(models.PaySuccess)
 	} else {
-		u.walletStatus.Change("Pay error. Not enough money.")
+		u.walletStatus.Change(models.PayFail)
 	}
 	return u.walletStatus.Get()
 }

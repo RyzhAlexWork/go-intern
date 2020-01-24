@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"github.com/RyzhAlexWork/go-intern/Task1/pkg/models"
 
-	"github.com/RyzhAlexWork/go-intern/pkg/facade"
-	"github.com/RyzhAlexWork/go-intern/pkg/status"
-	"github.com/RyzhAlexWork/go-intern/pkg/wallet"
+	"github.com/RyzhAlexWork/go-intern/Task1/pkg/facade"
+	"github.com/RyzhAlexWork/go-intern/Task1/pkg/status"
+	"github.com/RyzhAlexWork/go-intern/Task1/pkg/wallet"
 )
 
 var (
-	expect = []string{
+	expect = []models.Status{
 		"Deposit was successful.",
 		"Pay was successful.",
 	}
-	result  string
+	result  models.Status
 	balance int
 )
 
