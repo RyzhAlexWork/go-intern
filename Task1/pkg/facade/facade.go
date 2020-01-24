@@ -61,7 +61,7 @@ func (u *user) Balance() int {
 	return u.wallet.Balance()
 }
 
-// NewUser creates user.
+// NewUser create user implementation for interface User
 func NewUser(login string, inputWallet wallet, inputWalletStatus walletStatus) User {
 	return &user{
 		login:        login,

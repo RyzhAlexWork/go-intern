@@ -22,7 +22,7 @@ func (w *walletStatus) Change(newText models.Status) {
 	w.text = newText
 }
 
-// NewWalletStatus create status implementation for interface WalletStatus
+// NewWalletStatus create walletStatus implementation for interface WalletStatus
 func NewWalletStatus() WalletStatus {
 	return &walletStatus{}
 }
